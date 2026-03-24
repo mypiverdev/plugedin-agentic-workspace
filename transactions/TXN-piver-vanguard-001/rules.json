@@ -1,0 +1,18 @@
+﻿{
+    "deliverables":  [
+                         "brochure.pdf",
+                         "brochure-source.ai"
+                     ],
+    "evaluation_criteria":  {
+
+                            },
+    "deadline":  "2026-04-05",
+    "revision_limit":  2,
+    "workspace_rules":  [
+                            "Provider works in workspace/work/",
+                            "Final deliverables go in deliverables/",
+                            "Client can read workspace/ at any time",
+                            "Neither party modifies escrow.json directly",
+                            "All actions are logged to log.json"
+                        ]
+}

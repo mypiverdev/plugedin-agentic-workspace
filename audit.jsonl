@@ -1,0 +1,7 @@
+
+{"detail":"Pull successful","status":"ok","timestamp":"2026-03-24T10:51:03.8742180Z","action":"sync.pull","machine":"DESKTOP-G83ILND"}
+{"detail":"Generated files rebuilt","status":"ok","timestamp":"2026-03-24T10:51:03.8742180Z","action":"sync.rebuild","machine":"DESKTOP-G83ILND"}
+{"detail":"Application submitted","timestamp":"2026-03-24T18:21:42.2930933Z","entity":"ext-acme","action":"registration.applied","machine":"SERO-ASUS"}
+{"detail":"Admitted to marketplace","timestamp":"2026-03-24T18:21:48.6375589Z","entity":"ext-acme","action":"registration.admitted","machine":"SERO-ASUS"}
+{"detail":"transaction.created for TXN-zenith-ext-acme-001","timestamp":"2026-03-24T18:22:14.7516535Z","entity":"ext-acme","action":"event.posted","machine":"SERO-ASUS"}
+{"detail":"EVT-001 consumed","timestamp":"2026-03-24T18:22:28.0485584Z","entity":"ext-acme","action":"event.consumed","machine":"SERO-ASUS"}

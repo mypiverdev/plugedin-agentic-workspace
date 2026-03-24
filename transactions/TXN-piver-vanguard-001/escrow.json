@@ -1,0 +1,13 @@
+﻿{
+    "amount":  750,
+    "currency":  "USD",
+    "funded_by":  "piver",
+    "funded_at":  "2026-03-24T10:16:56.7435156Z",
+    "status":  "released",
+    "release_conditions":  [
+                               "client_acceptance"
+                           ],
+    "released_at":  "2026-03-24T10:29:43.0632341Z",
+    "released_to":  "vanguard",
+    "refunded_at":  null
+}

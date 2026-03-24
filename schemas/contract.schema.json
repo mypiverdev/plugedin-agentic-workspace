@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Marketplace Contract",
+  "type": "object",
+  "required": ["id", "type", "client", "provider", "scope", "price", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^MC-[a-z0-9-]+-[a-z0-9-]+-[0-9]+$"
+    },
+    "transaction_id": {
+      "type": "string",
+      "pattern": "^TXN-[a-z0-9-]+-[a-z0-9-]+-[0-9]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["external"]
+    },
+    "client": {
+      "type": "string",
+      "description": "Entity ID of the client (buyer)"
+    },
+    "provider": {
+      "type": "string",
+      "description": "Entity ID of the provider (seller)"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "engagement_type": {
+      "type": "string",
+      "enum": ["task", "project", "operation"]
+    },
+    "deliverables": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "deadline": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "completed", "terminated"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  }
+}

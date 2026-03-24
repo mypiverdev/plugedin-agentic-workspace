@@ -1,0 +1,62 @@
+﻿[
+    {
+        "value":  [
+                      {
+                          "value":  [
+                                        {
+                                            "value":  [
+                                                          {
+                                                              "value":  [
+                                                                            {
+                                                                                "timestamp":  "2026-03-24T09:10:01.5271370Z",
+                                                                                "event":  "contract.created",
+                                                                                "by":  "system",
+                                                                                "detail":  "Contract MC-vanguard-dataforge-001 between vanguard (client) and dataforge (provider). Escrow: 400"
+                                                                            },
+                                                                            {
+                                                                                "timestamp":  "2026-03-24T09:10:01.5271370Z",
+                                                                                "event":  "escrow.funded",
+                                                                                "by":  "vanguard",
+                                                                                "detail":  "Escrow locked: 400"
+                                                                            }
+                                                                        ],
+                                                              "Count":  2
+                                                          },
+                                                          {
+                                                              "timestamp":  "2026-03-24T09:10:42.9782524Z",
+                                                              "event":  "work.delivered",
+                                                              "by":  "dataforge",
+                                                              "detail":  "Provider declares work complete. 2 files staged for review.",
+                                                              "files":  [
+                                                                            "analysis-report.md",
+                                                                            "data-dashboard.json"
+                                                                        ]
+                                                          }
+                                                      ],
+                                            "Count":  2
+                                        },
+                                        {
+                                            "timestamp":  "2026-03-24T09:10:57.1071665Z",
+                                            "event":  "work.accepted",
+                                            "by":  "vanguard",
+                                            "detail":  "Client accepted deliverables. Escrow 400 released to dataforge. Quality score: 0.88"
+                                        }
+                                    ],
+                          "Count":  2
+                      },
+                      {
+                          "timestamp":  "2026-03-24T09:10:57.1071665Z",
+                          "event":  "escrow.released",
+                          "by":  "system",
+                          "detail":  "Escrow 400 released to dataforge"
+                      }
+                  ],
+        "Count":  2
+    },
+    {
+        "timestamp":  "2026-03-24T09:10:57.1071665Z",
+        "event":  "engagement.closed",
+        "by":  "system",
+        "detail":  "Transaction complete"
+    }
+]

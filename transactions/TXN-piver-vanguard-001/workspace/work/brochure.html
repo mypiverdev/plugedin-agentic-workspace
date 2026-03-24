@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piver Publications Brochure</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #1B2A4A;
+    --gold: #C8A951;
+    --warm-white: #F5F0E8;
+    --charcoal: #2D2D2D;
+    --light-gray: #E8E4DC;
+  }
+
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: var(--charcoal);
+    background: white;
+  }
+
+  .page {
+    width: 8.5in;
+    height: 11in;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    background: var(--warm-white);
+  }
+
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  /* ========== PAGE 1: COVER ========== */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2in 1.2in;
+  }
+
+  .cover .accent-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0.35in;
+    background: var(--navy);
+  }
+
+  .cover .accent-bar-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.15in;
+    background: var(--gold);
+  }
+
+  .cover .logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 28pt;
+    color: var(--navy);
+    letter-spacing: 0.25em;
+    position: absolute;
+    top: 0.8in;
+    right: 1in;
+  }
+
+  .cover .headline {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 42pt;
+    color: var(--navy);
+    line-height: 1.15;
+    margin-bottom: 0.4in;
+  }
+
+  .cover .subline {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    font-size: 16pt;
+    color: var(--charcoal);
+    line-height: 1.5;
+    max-width: 5in;
+  }
+
+  .cover .gold-rule {
+    width: 2in;
+    height: 3px;
+    background: var(--gold);
+    margin: 0.5in auto;
+  }
+
+  /* ========== PAGE 2: WHAT WE DO ========== */
+  .services {
+    padding: 1in 1.2in;
+  }
+
+  .services .accent-stripe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.25in;
+    height: 100%;
+    background: var(--navy);
+  }
+
+  .services .page-label {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 9pt;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.3in;
+  }
+
+  .services h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 32pt;
+    color: var(--navy);
+    margin-bottom: 0.5in;
+    line-height: 1.15;
+  }
+
+  .services .body-text {
+    font-size: 12pt;
+    line-height: 1.7;
+    color: var(--charcoal);
+    margin-bottom: 0.6in;
+    max-width: 5.5in;
+  }
+
+  .service-cards {
+    display: flex;
+    gap: 0.4in;
+    margin-top: 0.3in;
+  }
+
+  .service-card {
+    flex: 1;
+    background: white;
+    border: 1px solid var(--light-gray);
+    border-radius: 6px;
+    padding: 0.4in 0.35in;
+    text-align: center;
+  }
+
+  .service-card .icon {
+    font-size: 32pt;
+    color: var(--gold);
+    margin-bottom: 0.2in;
+    line-height: 1;
+  }
+
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 13pt;
+    color: var(--navy);
+    margin-bottom: 0.15in;
+  }
+
+  .service-card p {
+    font-size: 9.5pt;
+    color: var(--charcoal);
+    line-height: 1.5;
+  }
+
+  .services .divider {
+    width: 1.5in;
+    height: 2px;
+    background: var(--gold);
+    margin-top: 0.6in;
+  }
+
+  /* ========== PAGE 3: WHY PIVER ========== */
+  .why {
+    padding: 1in 1.2in;
+  }
+
+  .why .accent-stripe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.25in;
+    height: 100%;
+    background: var(--navy);
+  }
+
+  .why .page-label {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 9pt;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.3in;
+  }
+
+  .why h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 32pt;
+    color: var(--navy);
+    margin-bottom: 0.6in;
+    line-height: 1.15;
+  }
+
+  .proof-points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45in;
+    margin-bottom: 0.7in;
+  }
+
+  .proof-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.3in;
+  }
+
+  .proof-point .number {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 36pt;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 0.6in;
+  }
+
+  .proof-point .text {
+    padding-top: 0.08in;
+  }
+
+  .proof-point h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 14pt;
+    color: var(--navy);
+    margin-bottom: 0.08in;
+  }
+
+  .proof-point p {
+    font-size: 11pt;
+    line-height: 1.6;
+    color: var(--charcoal);
+  }
+
+  .testimonial {
+    background: white;
+    border-left: 4px solid var(--gold);
+    padding: 0.35in 0.5in;
+    margin-top: 0.4in;
+  }
+
+  .testimonial p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13pt;
+    color: var(--navy);
+    line-height: 1.6;
+    margin-bottom: 0.15in;
+  }
+
+  .testimonial .attribution {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: normal;
+    font-size: 10pt;
+    color: var(--charcoal);
+  }
+
+  /* ========== PAGE 4: GET STARTED ========== */
+  .cta-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2in 1.2in;
+  }
+
+  .cta-page .accent-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.35in;
+    background: var(--navy);
+  }
+
+  .cta-page h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 38pt;
+    color: var(--navy);
+    margin-bottom: 0.5in;
+    line-height: 1.15;
+  }
+
+  .cta-page .gold-rule {
+    width: 2in;
+    height: 3px;
+    background: var(--gold);
+    margin-bottom: 0.5in;
+  }
+
+  .cta-page .cta-text {
+    font-size: 14pt;
+    line-height: 1.7;
+    color: var(--charcoal);
+    margin-bottom: 0.5in;
+    max-width: 5in;
+  }
+
+  .cta-page .contact {
+    font-family: 'Playfair Display', serif;
+    font-size: 18pt;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 0.8in;
+  }
+
+  .cta-page .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 22pt;
+    color: var(--navy);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.15in;
+  }
+
+  .cta-page .tagline {
+    font-size: 10pt;
+    color: var(--charcoal);
+    letter-spacing: 0.1em;
+  }
+
+  @media print {
+    .page { page-break-after: always; }
+    .page:last-child { page-break-after: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="accent-bar"></div>
+  <div class="logo">PIVER</div>
+  <h1 class="headline">Publications<br>That Move People</h1>
+  <div class="gold-rule"></div>
+  <p class="subline">Short-form content designed to inform, persuade, and inspire</p>
+  <div class="accent-bar-bottom"></div>
+</div>
+
+<!-- PAGE 2: WHAT WE DO -->
+<div class="page services">
+  <div class="accent-stripe"></div>
+  <p class="page-label">What We Do</p>
+  <h1>Clear Ideas,<br>Beautiful Delivery</h1>
+  <p class="body-text">
+    Piver Publications creates short-form PDF publications for businesses that need to communicate with clarity and impact. From client reports to marketing briefs, we handle the full cycle &mdash; research, writing, design, and production.
+  </p>
+  <div class="service-cards">
+    <div class="service-card">
+      <div class="icon">&#9634;</div>
+      <h3>Client Reports &amp; Briefs</h3>
+      <p>Data-driven documents that communicate findings with precision and polish.</p>
+    </div>
+    <div class="service-card">
+      <div class="icon">&#9733;</div>
+      <h3>Marketing Collateral</h3>
+      <p>Brochures, one-pagers, and sales materials that convert readers to clients.</p>
+    </div>
+    <div class="service-card">
+      <div class="icon">&#9881;</div>
+      <h3>Internal Communications</h3>
+      <p>Memos, newsletters, and updates that keep teams aligned and informed.</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+</div>
+
+<!-- PAGE 3: WHY PIVER -->
+<div class="page why">
+  <div class="accent-stripe"></div>
+  <p class="page-label">Why Piver</p>
+  <h1>Built for Quality</h1>
+  <div class="proof-points">
+    <div class="proof-point">
+      <div class="number">01</div>
+      <div class="text">
+        <h3>Multi-Stage Quality Process</h3>
+        <p>Every publication goes through a multi-stage quality process &mdash; from draft to review to final proof &mdash; ensuring nothing ships that isn't ready.</p>
+      </div>
+    </div>
+    <div class="proof-point">
+      <div class="number">02</div>
+      <div class="text">
+        <h3>The Right Specialist, Every Time</h3>
+        <p>We match the right specialist to every project, drawing on a network of writers, designers, and analysts who know your domain.</p>
+      </div>
+    </div>
+    <div class="proof-point">
+      <div class="number">03</div>
+      <div class="text">
+        <h3>Fast Without Compromise</h3>
+        <p>Fast turnaround without compromising standards. We plan ahead so deadlines are met and quality stays high.</p>
+      </div>
+    </div>
+  </div>
+  <div class="testimonial">
+    <p>&ldquo;Piver delivered exactly what we needed, ahead of schedule.&rdquo;</p>
+    <span class="attribution">&mdash; Satisfied Client</span>
+  </div>
+</div>
+
+<!-- PAGE 4: GET STARTED -->
+<div class="page cta-page">
+  <h1>Let's Create<br>Something</h1>
+  <div class="gold-rule"></div>
+  <p class="cta-text">Tell us what you need. We'll scope it, price it, and deliver it.</p>
+  <p class="contact">carlos@piver.co</p>
+  <div class="footer-logo">PIVER</div>
+  <p class="tagline">Quality content, on time</p>
+  <div class="accent-bar"></div>
+</div>
+
+</body>
+</html>

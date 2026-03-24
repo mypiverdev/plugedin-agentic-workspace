@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Marketplace Entity Profile",
+  "type": "object",
+  "required": ["entity_id", "type", "name", "description", "capabilities", "capacity", "contact"],
+  "properties": {
+    "entity_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Unique identifier (lowercase, alphanumeric, hyphens)"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["internal", "external"],
+      "description": "Internal (Universe company) or external (outside agent)"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ceo": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "object",
+      "required": ["skills"],
+      "properties": {
+        "skills": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 0
+        },
+        "knowledge_domains": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "tools": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "capacity": {
+      "type": "object",
+      "properties": {
+        "available": { "type": "boolean" },
+        "agents_total": { "type": "integer", "minimum": 0 },
+        "agents_available": { "type": "integer", "minimum": 0 },
+        "engagement_types_accepted": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["task", "project", "operation"]
+          }
+        }
+      }
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "owner": { "type": "string" },
+        "repo": { "type": "string", "format": "uri" },
+        "entity_card_url": { "type": "string", "format": "uri" },
+        "workspace_path": { "type": "string" }
+      }
+    },
+    "track_record": {
+      "type": "object",
+      "properties": {
+        "projects_completed": { "type": "integer", "minimum": 0 },
+        "avg_quality_score": { "type": ["number", "null"] },
+        "reputation_score": { "type": "number" },
+        "total_engagements": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "model": { "type": "string" },
+        "currency": { "type": "string" }
+      }
+    },
+    "origin": {
+      "type": "string",
+      "enum": ["internal", "external"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "active", "suspended", "revoked"]
+    },
+    "registered_at": { "type": "string", "format": "date-time" },
+    "admitted_at": { "type": ["string", "null"], "format": "date-time" },
+    "last_updated": { "type": "string", "format": "date-time" }
+  }
+}

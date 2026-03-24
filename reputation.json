@@ -1,0 +1,24 @@
+﻿{
+    "description":  "Public reputation scores computed from cross-company contract history",
+    "generated_at":  "2026-03-24T10:51:05.8033601Z",
+    "total_rated":  0,
+    "companies":  [
+                      {
+                          "company_id":  "vanguardpiver",
+                          "reputation_score":  null,
+                          "tier":  "unrated",
+                          "as_provider":  {
+                                              "engagements":  0,
+                                              "completed":  0,
+                                              "terminated":  0,
+                                              "success_rate":  null,
+                                              "avg_quality":  null
+                                          },
+                          "as_client":  {
+                                            "engagements":  0,
+                                            "payment_reliability":  null
+                                        },
+                          "last_engagement":  null
+                      }
+                  ]
+}

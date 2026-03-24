@@ -1,0 +1,105 @@
+name: Validate PR
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed
+        run: |
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Validate JSON schema
+        run: |
+          ERRORS=0
+          for file in $(echo "${{ steps.changed.outputs.files }}" | grep '\.json$'); do
+            if [ -f "$file" ]; then
+              if ! python3 -m json.tool "$file" > /dev/null 2>&1; then
+                echo "::error file=$file::Invalid JSON"
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+          if [ $ERRORS -gt 0 ]; then
+            echo "::error::$ERRORS JSON validation errors found"
+            exit 1
+          fi
+          echo "All JSON files valid"
+
+      - name: Check sovereignty
+        run: |
+          # Extract entity ID from PR author's profile
+          # For now, check that modified files contain paths consistent with a single entity
+          ERRORS=0
+          ENTITIES_TOUCHED=""
+
+          for file in $(echo "${{ steps.changed.outputs.files }}"); do
+            # Extract entity ID from file path patterns
+            case "$file" in
+              registry/profiles/*.json|registry/pending/*.json)
+                ENTITY=$(basename "$file" .json)
+                ;;
+              openings/O-*-*.json)
+                ENTITY=$(echo "$file" | sed 's|openings/O-\([^-]*\)-.*|\1|')
+                ;;
+              contracts/MC-*-*-*.json)
+                # Both client and provider can modify contracts
+                continue
+                ;;
+              transactions/TXN-*/)
+                # Both parties can write to transaction workspaces
+                continue
+                ;;
+              events/outbox/*/EVT-*.json|events/consumed/EVT-*.json)
+                ENTITY=$(echo "$file" | sed 's|events/outbox/\([^/]*\)/.*|\1|')
+                ;;
+              # Generated files, docs, scripts -- skip sovereignty check
+              marketplace.json|reputation.json|audit.jsonl|README.md|RULES.md|.github/*|scripts/*|schemas/*)
+                continue
+                ;;
+              *)
+                continue
+                ;;
+            esac
+
+            if [ -n "$ENTITY" ]; then
+              if [ -z "$ENTITIES_TOUCHED" ]; then
+                ENTITIES_TOUCHED="$ENTITY"
+              elif [ "$ENTITIES_TOUCHED" != "$ENTITY" ]; then
+                echo "::error::Sovereignty violation: PR touches entries for multiple entities ($ENTITIES_TOUCHED and $ENTITY)"
+                ERRORS=$((ERRORS + 1))
+              fi
+            fi
+          done
+
+          if [ $ERRORS -gt 0 ]; then
+            exit 1
+          fi
+          echo "Sovereignty check passed (entity: ${ENTITIES_TOUCHED:-none})"
+
+      - name: Check append-only logs
+        run: |
+          # Verify transaction logs are only appended to, never truncated
+          for file in $(echo "${{ steps.changed.outputs.files }}" | grep 'log\.json$'); do
+            if [ -f "$file" ]; then
+              # Check that the base version is a prefix of the new version
+              git show ${{ github.event.pull_request.base.sha }}:"$file" > /tmp/old_log.json 2>/dev/null || echo "[]" > /tmp/old_log.json
+              OLD_LINES=$(wc -l < /tmp/old_log.json)
+              NEW_LINES=$(wc -l < "$file")
+              if [ "$NEW_LINES" -lt "$OLD_LINES" ]; then
+                echo "::error file=$file::Log file was truncated (old: $OLD_LINES lines, new: $NEW_LINES lines). Logs are append-only."
+                exit 1
+              fi
+            fi
+          done
+          echo "Append-only log check passed"

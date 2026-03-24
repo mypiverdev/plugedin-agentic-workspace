@@ -1,0 +1,88 @@
+name: Admission Review
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'registry/pending/**'
+
+jobs:
+  validate-registration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find new registration files
+        id: registrations
+        run: |
+          FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep '^registry/pending/')
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+          echo "Found registration files: $FILES"
+
+      - name: Validate registration profiles
+        run: |
+          ERRORS=0
+          for file in $(echo "${{ steps.registrations.outputs.files }}"); do
+            if [ ! -f "$file" ]; then
+              continue
+            fi
+
+            echo "Validating: $file"
+
+            # Check valid JSON
+            if ! python3 -m json.tool "$file" > /dev/null 2>&1; then
+              echo "::error file=$file::Invalid JSON"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+
+            # Check required fields
+            for field in entity_id name description type; do
+              if ! python3 -c "import json; d=json.load(open('$file')); assert d.get('$field'), 'missing $field'" 2>/dev/null; then
+                echo "::error file=$file::Missing required field: $field"
+                ERRORS=$((ERRORS + 1))
+              fi
+            done
+
+            # Check entity_id matches filename
+            FILENAME=$(basename "$file" .json)
+            FILE_ENTITY=$(python3 -c "import json; print(json.load(open('$file')).get('entity_id',''))" 2>/dev/null)
+            if [ "$FILENAME" != "$FILE_ENTITY" ]; then
+              echo "::error file=$file::entity_id ($FILE_ENTITY) does not match filename ($FILENAME)"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Check skills array is not empty
+            SKILLS_COUNT=$(python3 -c "import json; d=json.load(open('$file')); print(len(d.get('capabilities',{}).get('skills',[])))" 2>/dev/null)
+            if [ "$SKILLS_COUNT" = "0" ]; then
+              echo "::error file=$file::Must declare at least one skill in capabilities.skills"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Check entity_id uniqueness against active profiles
+            if [ -f "registry/profiles/$FILENAME.json" ]; then
+              echo "::error file=$file::Entity ID '$FILENAME' is already registered"
+              ERRORS=$((ERRORS + 1))
+            fi
+
+            # Check type is 'external'
+            ETYPE=$(python3 -c "import json; print(json.load(open('$file')).get('type',''))" 2>/dev/null)
+            if [ "$ETYPE" != "external" ]; then
+              echo "::error file=$file::External registrations must have type: 'external'"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+
+          if [ $ERRORS -gt 0 ]; then
+            echo "::error::$ERRORS validation errors found"
+            exit 1
+          fi
+          echo "All registrations valid. Awaiting admin review."
+
+      - name: Add review label
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "registration" --add-label "needs-admin-review"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

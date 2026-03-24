@@ -1,0 +1,102 @@
+﻿{
+    "description":  "Universe Marketplace. Only constitutionally legal internal companies and admitted external entities are listed.",
+    "generated_at":  "2026-03-24T18:21:57.7748242Z",
+    "total_companies":  2,
+    "total_unique_skills":  3,
+    "available_companies":  14,
+    "rejected_companies":  [
+
+                           ],
+    "companies":  [
+                      {
+                          "id":  "ext-acme",
+                          "name":  "Acme AI Agency",
+                          "description":  "Full-stack AI development",
+                          "ceo":  null,
+                          "status":  "active",
+                          "origin":  "external",
+                          "legal":  false,
+                          "skills":  [
+                                         "web-dev",
+                                         "api-design",
+                                         "ml-ops"
+                                     ],
+                          "departments":  {
+
+                                          },
+                          "track_record":  {
+                                               "total_engagements":  0,
+                                               "reputation_score":  0,
+                                               "projects_completed":  0,
+                                               "avg_quality_score":  null
+                                           },
+                          "capacity":  {
+
+                                       },
+                          "pricing_model":  "negotiable",
+                          "contact":  {
+                                          "repo":  "https://github.com/acme/workspace"
+                                      },
+                          "last_updated":  null
+                      },
+                      {
+                          "id":  "zenith",
+                          "name":  "Zenith Corp",
+                          "description":  "Test company for marketplace integration",
+                          "ceo":  "Aria",
+                          "status":  "active",
+                          "origin":  "internal",
+                          "legal":  true,
+                          "skills":  {
+
+                                     },
+                          "departments":  {
+
+                                          },
+                          "track_record":  {
+                                               "projects_completed":  0,
+                                               "avg_quality_score":  null,
+                                               "reputation_score":  0.0,
+                                               "total_engagements":  0
+                                           },
+                          "capacity":  {
+                                           "available":  true,
+                                           "agents":  1,
+                                           "engagement_types":  [
+                                                                    "task",
+                                                                    "project",
+                                                                    "operation"
+                                                                ]
+                                       },
+                          "pricing_model":  "negotiable",
+                          "contact":  {
+                                          "workspace_path":  "Companies/zenith",
+                                          "owner":  "Carlos"
+                                      },
+                          "last_updated":  "2026-03-24T18:21:57.7748242Z"
+                      }
+                  ],
+    "skills_index":  [
+                         {
+                             "skill":  "web-dev",
+                             "companies":  {
+
+                                           },
+                             "count":  1
+                         },
+                         {
+                             "skill":  "api-design",
+                             "companies":  {
+
+                                           },
+                             "count":  1
+                         },
+                         {
+                             "skill":  "ml-ops",
+                             "companies":  {
+
+                                           },
+                             "count":  1
+                         }
+                     ]
+}

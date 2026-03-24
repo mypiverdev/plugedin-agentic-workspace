@@ -1,0 +1,17 @@
+{
+  "dashboard": "Acme Corp Customer Analytics",
+  "generated": "2026-03-24",
+  "metrics": {
+    "total_customers": 12847,
+    "active_customers": 847,
+    "monthly_revenue": 284000,
+    "avg_customer_value": 335,
+    "churn_rate_monthly": 0.034,
+    "retention_rate_90d": 0.71
+  },
+  "segments": [
+    { "name": "Enterprise", "count": 127, "revenue_share": 0.45, "churn_risk": "low" },
+    { "name": "Mid-market", "count": 320, "revenue_share": 0.35, "churn_risk": "medium" },
+    { "name": "SMB", "count": 400, "revenue_share": 0.20, "churn_risk": "high" }
+  ]
+}

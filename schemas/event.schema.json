@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Marketplace Event",
+  "type": "object",
+  "required": ["id", "timestamp", "type", "transaction_id", "target_entity", "role"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^EVT-[0-9]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "transaction.created",
+        "escrow.funded",
+        "work.started",
+        "progress.update",
+        "work.delivered",
+        "work.accepted",
+        "work.rejected",
+        "escrow.released",
+        "escrow.refunded",
+        "engagement.terminated",
+        "engagement.closed"
+      ]
+    },
+    "transaction_id": {
+      "type": "string"
+    },
+    "contract_id": {
+      "type": "string"
+    },
+    "target_entity": {
+      "type": "string",
+      "description": "Entity ID this event is for"
+    },
+    "role": {
+      "type": "string",
+      "enum": ["client", "provider"],
+      "description": "The target entity's role in the transaction"
+    },
+    "data": {
+      "type": "object",
+      "description": "Event-specific payload (amount, quality_score, etc.)"
+    },
+    "consumed": {
+      "type": "boolean",
+      "default": false
+    },
+    "consumed_at": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    },
+    "consumed_by": {
+      "type": ["string", "null"]
+    }
+  }
+}

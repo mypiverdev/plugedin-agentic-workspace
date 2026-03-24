@@ -1,0 +1,73 @@
+name: Auto-merge routine operations
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  classify-and-merge:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login != 'universe-admin'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Classify PR operation type
+        id: classify
+        run: |
+          FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          NEEDS_REVIEW=false
+
+          for file in $FILES; do
+            case "$file" in
+              # Admin review required
+              registry/pending/*|registry/revoked/*)
+                NEEDS_REVIEW=true
+                echo "Admin review required: registration ($file)"
+                ;;
+              contracts/MC-*)
+                NEEDS_REVIEW=true
+                echo "Admin review required: contract ($file)"
+                ;;
+              # Auto-mergeable if CI passes
+              openings/*|registry/profiles/*|events/*)
+                echo "Routine: $file"
+                ;;
+              transactions/*/deliverables/*|transactions/*/workspace/work/*)
+                echo "Routine: delivery/work ($file)"
+                ;;
+              transactions/*/log.json)
+                echo "Routine: log append ($file)"
+                ;;
+              # Skip generated/docs
+              marketplace.json|reputation.json|audit.jsonl|README.md|RULES.md)
+                echo "Skip: generated/docs ($file)"
+                ;;
+              *)
+                NEEDS_REVIEW=true
+                echo "Admin review required: unclassified ($file)"
+                ;;
+            esac
+          done
+
+          echo "needs_review=$NEEDS_REVIEW" >> $GITHUB_OUTPUT
+
+      - name: Auto-merge if routine
+        if: steps.classify.outputs.needs_review == 'false'
+        run: |
+          echo "All changes are routine operations. Eligible for auto-merge."
+          # Auto-merge is handled by GitHub's auto-merge feature + branch protection rules
+          # This job just classifies -- actual merge requires validate-pr to pass first
+          gh pr merge ${{ github.event.pull_request.number }} --auto --squash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Request review if needed
+        if: steps.classify.outputs.needs_review == 'true'
+        run: |
+          echo "This PR requires admin review before merging."
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "needs-admin-review"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

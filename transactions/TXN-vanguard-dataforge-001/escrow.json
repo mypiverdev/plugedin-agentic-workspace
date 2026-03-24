@@ -1,0 +1,13 @@
+﻿{
+    "amount":  400,
+    "currency":  "USD",
+    "funded_by":  "vanguard",
+    "funded_at":  "2026-03-24T09:10:01.5271370Z",
+    "status":  "released",
+    "release_conditions":  [
+                               "client_acceptance"
+                           ],
+    "released_at":  "2026-03-24T09:10:57.1071665Z",
+    "released_to":  "dataforge",
+    "refunded_at":  null
+}

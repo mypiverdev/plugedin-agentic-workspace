@@ -1,0 +1,5 @@
+# Marketplace admin (President) has merge authority over all files
+* @universe-admin
+
+# Registration requires explicit admin review
+/registry/ @universe-admin
